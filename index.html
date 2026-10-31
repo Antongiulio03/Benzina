@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Benzina</title>
-<meta name="description" content="Registro dei rifornimenti: spesa, prezzo medio, km percorsi e consumi.">
+<title>Rifornimenti</title>
+<meta name="description" content="Registro dei rifornimenti: spesa, litri, km percorsi e consumi.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Benzina">
+<meta name="apple-mobile-web-app-title" content="Rifornimenti">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="format-detection" content="telephone=no">
 <meta name="theme-color" content="#E9ECEE" media="(prefers-color-scheme: light)">
@@ -27,7 +27,7 @@
   --accent:#0F7A45; --accent-ink:#FFFFFF; --accent-soft:rgba(15,122,69,.12);
   --bar:#0F7A45; --bar-dim:#9DC7AE;
   --warn:#9A5B00; --warn-soft:rgba(178,107,0,.12); --danger:#C2361F;
-  --lcd:#B9C4A0; --lcd-ink:#16210F; --lcd-ghost:rgba(22,33,15,.085); --lcd-label:#3B4930; --lcd-line:rgba(22,33,15,.16);
+  --lcd:#D3DCC2; --lcd-ink:#0A1105; --lcd-ghost:rgba(10,17,5,.055); --lcd-label:#25311C; --lcd-line:rgba(10,17,5,.17);
   --bezel:#262B2F; --tab:rgba(233,236,238,.86);
   color-scheme:light;
 }
@@ -38,7 +38,7 @@
     --accent:#3CBF7B; --accent-ink:#06170D; --accent-soft:rgba(60,191,123,.16);
     --bar:#3CBF7B; --bar-dim:#2D5E44;
     --warn:#F0B24A; --warn-soft:rgba(240,178,74,.14); --danger:#FF6B52;
-    --lcd:#0A100B; --lcd-ink:#86F2AE; --lcd-ghost:rgba(134,242,174,.07); --lcd-label:#6C9C7E; --lcd-line:rgba(134,242,174,.14);
+    --lcd:#050906; --lcd-ink:#A8FFCB; --lcd-ghost:rgba(168,255,203,.055); --lcd-label:#9CCBAE; --lcd-line:rgba(168,255,203,.17);
     --bezel:#2C3135; --tab:rgba(18,20,22,.86);
     color-scheme:dark;
   }
@@ -66,14 +66,17 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 
 /* pump display */
 .pump{background:var(--lcd);color:var(--lcd-ink);border-radius:16px;padding:14px 18px 14px;margin:5px;box-shadow:0 0 0 5px var(--bezel),inset 0 2px 8px rgba(0,0,0,.14)}
-.pump-label{font:500 15px/1.2 Barlow,sans-serif;color:var(--lcd-label)}
+.pump-label{font:600 15px/1.2 Barlow,sans-serif;color:var(--lcd-label)}
 .pump-big{display:flex;align-items:flex-end;justify-content:flex-end;gap:8px;margin:6px 0 12px}
-.pump-unit{font:600 26px/1 Barlow,sans-serif;color:var(--lcd-ink);padding-bottom:4px}
-.pump-sub{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--lcd-line);padding-top:10px}
-.pump-sub>div+div{border-left:1px solid var(--lcd-line);padding-left:14px}
-.pump-sub .seg{font-size:22px;margin-top:6px}
-.pump-sub .pump-val{display:flex;align-items:baseline;gap:6px}
-.pump-sub .pump-u{font:500 14px Barlow,sans-serif;color:var(--lcd-label)}
+.pump-unit{font:600 28px/1 Barlow,sans-serif;color:var(--lcd-ink);padding-bottom:4px}
+.pump-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--lcd-line)}
+.pump-cell{padding:11px 0 10px;min-width:0}
+.pump-cell:nth-child(even){border-left:1px solid var(--lcd-line);padding-left:14px}
+.pump-cell:nth-child(n+3){border-top:1px solid var(--lcd-line)}
+.pump-val{display:flex;align-items:baseline;gap:6px;margin-top:7px}
+.pump-cell .seg{font-size:clamp(21px,6.9vw,28px)}
+.pump-u{font:600 15px Barlow,sans-serif;color:var(--lcd-label)}
+.pump-note{font:500 14px/1.2 Barlow,sans-serif;color:var(--lcd-label);margin-top:6px}
 .seg{position:relative;display:inline-block;font-family:DSEG7;font-weight:700;line-height:1;white-space:pre;letter-spacing:.02em}
 .seg .g{color:var(--lcd-ghost)}
 .seg .v{position:absolute;right:0;top:0;color:var(--lcd-ink)}
@@ -279,7 +282,7 @@ button.row:active{background:var(--fill)}
 
 <script>
 'use strict';
-const AVG_BASE="2023-01-01",AVG_RAW="0,16441;8,18120;15,18136;22,18295;29,18713;36,18724;43,18597;50,18600;57,18565;64,18528;71,18599;78,18553;85,18509;92,18581;99,18753;106,18857;113,18780;120,18575;127,18348;134,18116;141,18075;148,18185;155,18222;162,18314;169,18410;176,18524;183,18465;190,18449;197,18596;204,18640;211,18980;218,19292;225,19391;232,19462;239,19477;246,19545;253,19696;260,19973;267,20019;274,19916;281,19627;288,19187;295,18955;302,18729;309,18542;316,18350;323,18157;330,18053;337,17971;344,17801;351,17659;358,17648;365,17721;372,17737;379,17689;386,17778;393,18119;400,18267;407,18400;414,18639;421,18590;428,18520;435,18527;442,18514;449,18772;456,18872;463,19008;470,19137;477,19205;484,19146;491,19123;498,18986;505,18829;512,18739;519,18651;526,18507;533,18444;540,18456;547,18597;554,18715;561,18698;568,18622;575,18515;582,18386;589,18280;596,18221;603,18110;610,17958;617,17824;624,17594;631,17430;638,17348;645,17314;652,17575;659,17653;666,17621;673,17565;680,17564;687,17539;694,17581;701,17637;708,17571;715,17504;722,17546;729,17567;736,17726;743,17931;750,18231;757,18313;764,18235;771,18209;778,18246;785,18236;792,18161;799,18018;806,17821;813,17671;820,17618;827,17612;834,17387;841,17161;848,17052;855,16968;862,16897;869,16987;876,16978;883,16931;890,16898;897,16966;904,17341;911,17473;918,17335;925,17288;932,17273;939,17206;946,17127;953,17093;960,17013;967,16954;974,16968;981,17054;988,17108;995,17135;1002,17117;1009,17089;1016,16993;1023,16903;1030,16835;1037,16948;1044,17055;1051,17195;1058,17307;1065,17272;1072,17182;1079,17080;1086,16900;1093,16789;1100,16547;1107,16273;1114,16262;1121,16350;1128,16416;1135,16449;1142,16483;1149,16546;1156,16704;1163,17452;1170,18192;1177,17787;1184,17334;1191,17619;1198,17827;1205,17628;1212,17321;1219,17893;1226,19330;1233,19368;1240,19640;1247,19515;1254,19210;1261,18955;1268,18502;1275,18119;1282,18100;1289,18636;1296,19103;1303,19608;1310,19923;1317,19926;1324,19880;1331,20030;1338,20167;1345,20347;1352,20841;1359,21412;1366,21562;1373,20727;1380,20210;1387,20157",AVG_LAST="2026-10-19";
+const AVG_BASE="2023-01-01",AVG_RAW="0,17078;8,18681;15,18637;22,18751;29,19123;36,18970;43,18532;50,18366;57,18217;64,18091;71,18126;78,18018;85,18007;92,17668;99,17672;106,17665;113,17456;120,17108;127,16799;134,16541;141,16503;148,16623;155,16614;162,16684;169,16774;176,16903;183,16850;190,16838;197,17033;204,17096;211,17461;218,17964;225,18277;232,18453;239,18474;246,18556;253,18767;260,19240;267,19382;274,19321;281,19216;288,18973;295,18837;302,18653;309,18477;316,18243;323,17965;330,17854;337,17734;344,17537;351,17321;358,17252;365,17307;372,17305;379,17245;386,17341;393,17669;400,17856;407,18015;414,18326;421,18264;428,18127;435,18007;442,17900;449,18007;456,17931;463,17988;470,18069;477,18025;484,17899;491,17752;498,17533;505,17333;512,17224;519,17110;526,16950;533,16943;540,17158;547,17375;554,17517;561,17510;568,17424;575,17306;582,17173;589,17052;596,16984;603,16842;610,16681;617,16555;624,16357;631,16222;638,16155;645,16124;652,16400;659,16453;666,16355;673,16319;680,16353;687,16344;694,16489;701,16615;708,16554;715,16478;722,16533;729,16560;736,16719;743,16924;750,17269;757,17395;764,17304;771,17241;778,17273;785,17270;792,17191;799,17038;806,16834;813,16669;820,16595;827,16572;834,16324;841,16097;848,15988;855,15895;862,15786;869,15912;876,15986;883,15916;890,15856;897,15937;904,16431;911,16759;918,16637;925,16628;932,16637;939,16604;946,16489;953,16414;960,16314;967,16220;974,16225;981,16302;988,16348;995,16384;1002,16377;1009,16360;1016,16254;1023,16158;1030,16088;1037,16323;1044,16543;1051,16828;1058,17026;1065,17014;1072,16843;1079,16651;1086,16426;1093,16287;1100,16442;1107,16604;1114,16607;1121,16735;1128,16819;1135,16910;1142,16955;1149,17018;1156,17207;1163,18692;1170,20335;1177,20232;1184,20327;1191,20921;1198,21534;1205,21147;1212,20596;1219,20456;1226,20199;1233,19827;1240,19893;1247,20194;1254,19827;1261,20047;1268,19487;1275,18970;1282,18872;1289,19570;1296,20382;1303,21406;1310,20903;1317,20808;1324,20789;1331,21151;1338,21235;1345,21418;1352,21907;1359,22814;1366,23507;1373,22735;1380,22407;1387,22444;1394,22467",AVG_LAST="2026-10-26";
 
 /* ---------- formatting ---------- */
 const NF = {};
@@ -310,7 +313,7 @@ const inputNum = (x, maxDec) => {
   return s.replace('.', ',');
 };
 
-/* ---------- national weekly average (Ministero, benzina) ---------- */
+/* ---------- national weekly average (Ministero, gasolio auto) ---------- */
 const AVG = (() => {
   const base = Date.parse(AVG_BASE + 'T00:00:00Z');
   return AVG_RAW.split(';').map(x => { const [o, v] = x.split(','); return {t: base + o * 864e5, p: v / 1e4}; });
@@ -328,7 +331,7 @@ function avgFor(iso) {
 
 /* ---------- storage ---------- */
 const KEY = 'benzina.v1';
-let store = {refuels: [], lastBackup: null, lastChange: null};
+let store = {refuels: [], lastBackup: null, lastChange: null, fuel: null};
 function clean(r) {
   if (!r || typeof r !== 'object') return null;
   const o = {id: String(r.id || uid()), date: String(r.date || ''), km: Math.round(Number(r.km)), liters: Number(r.liters), price: Number(r.price)};
@@ -345,8 +348,16 @@ function load() {
       store.refuels = (d.refuels || []).map(clean).filter(Boolean);
       store.lastBackup = d.lastBackup || null;
       store.lastChange = d.lastChange || null;
+      store.fuel = d.fuel || null;
     }
   } catch (e) { /* storage unavailable: app still works for this session */ }
+}
+// 1.2: the weekly averages are now diesel; prices that came from the old petrol average are refreshed
+function migrateFuel() {
+  if (store.fuel === 'gasolio') return;
+  for (const r of store.refuels) if (r.est) { const a = avgFor(r.date); if (a) r.price = a.price; }
+  store.fuel = 'gasolio';
+  persist(false);
 }
 function persist(changed) {
   if (changed) store.lastChange = new Date().toISOString();
@@ -416,16 +427,20 @@ function segParts(v, dec, minInt) {
   return {val: '!'.repeat(w - i.length) + i + (dec ? '.' + f : ''), ghost: '8'.repeat(w) + (dec ? '.' + '8'.repeat(dec) : '')};
 }
 function seg(v, dec, minInt, cls) {
-  const p = segParts(v, dec, minInt);
-  return `<span class="seg ${cls || ''}" aria-hidden="true"><span class="g">${p.ghost}</span><span class="v">${p.val}</span></span>`;
+  const p = segParts(v || 0, dec, minInt);
+  if (v == null) p.val = p.ghost.replace(/8/g, '-');
+  const data = v > 0 ? ` data-to="${v}" data-dec="${dec}" data-min="${minInt}"` : '';
+  return `<span class="seg ${cls || ''}" aria-hidden="true"${data}><span class="g">${p.ghost}</span><span class="v">${p.val}</span></span>`;
 }
-function countUp(el, to, dec, minInt) {
-  const v = el.querySelector('.v');
-  if (!v || matchMedia('(prefers-reduced-motion: reduce)').matches || to <= 0) return;
+// every number on the display counts up together, like a pump starting
+function countUp(root) {
+  if (!root || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const items = [...root.querySelectorAll('.seg[data-to]')].map(el => ({v: el.querySelector('.v'), to: +el.dataset.to, dec: +el.dataset.dec, min: +el.dataset.min}));
+  if (!items.length) return;
   const t0 = performance.now(), dur = 900;
   const step = t => {
     const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
-    v.textContent = segParts(to * e, dec, minInt).val;
+    for (const it of items) it.v.textContent = segParts(it.to * e, it.dec, it.min).val;
     if (k < 1) requestAnimationFrame(step);
   };
   requestAnimationFrame(step);
@@ -489,17 +504,20 @@ function renderSummary() {
   const span = monthsSpan(y, rows);
   const nMonths = Math.max(1, span.to - span.from + 1);
   const intW = Math.max(4, Math.floor(s.spend).toString().length);
-  let h = `<header class="top"><h1>Benzina</h1>
+  let h = `<header class="top"><h1>Rifornimenti</h1>
     <button class="icon-btn" id="b-data" aria-label="Backup e dati"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7.5h16v11a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5z"/><path d="M3 4.5h18v3H3z"/><path d="M12 10.5v6M9.5 14l2.5 2.5 2.5-2.5"/></svg></button></header>`;
   h += `<div class="years" role="tablist" aria-label="Anno">` + years.map(v =>
     `<button class="year" role="tab" data-year="${v}" aria-selected="${v === y}">${v}</button>`).join('') + `</div>`;
 
-  h += `<section class="pump" aria-label="Speso nel ${y}: ${eur(s.spend)}, ${ltf(s.liters)}, prezzo medio ${s.avgPrice ? pplf(s.avgPrice) : 'non disponibile'}">
+  const kmW = Math.max(4, String(Math.round(s.km)).length);
+  h += `<section class="pump" id="hero" aria-label="Nel ${y}: speso ${eur(s.spend)}, ${ltf(s.liters)}, ${s.km ? kmf(s.km) : 'km non ancora calcolabili'}, consumo ${s.kml ? n(s.kml, 1) + ' km/l' : 'non disponibile'}, ${s.e100 ? eur(s.e100) + ' ogni 100 km' : ''}">
     <div class="pump-label">Speso nel ${y}</div>
-    <div class="pump-big" id="hero">${seg(s.spend, 2, intW, 'big')}<span class="pump-unit">€</span></div>
-    <div class="pump-sub">
-      <div><div class="pump-label">Litri</div><div class="pump-val">${seg(s.liters, 1, 3)}</div></div>
-      <div><div class="pump-label">Prezzo medio</div><div class="pump-val">${seg(s.avgPrice || 0, 3, 1)}<span class="pump-u">€/l</span></div></div>
+    <div class="pump-big">${seg(s.spend, 2, intW, 'big')}<span class="pump-unit">€</span></div>
+    <div class="pump-grid">
+      <div class="pump-cell"><div class="pump-label">Litri</div><div class="pump-val">${seg(s.liters, 1, 3)}<span class="pump-u">l</span></div></div>
+      <div class="pump-cell"><div class="pump-label">Km percorsi</div><div class="pump-val">${seg(s.km || null, 0, kmW)}<span class="pump-u">km</span></div></div>
+      <div class="pump-cell"><div class="pump-label">Consumo medio</div><div class="pump-val">${seg(s.kml, 1, 2)}<span class="pump-u">km/l</span></div></div>
+      <div class="pump-cell"><div class="pump-label">Ogni 100 km</div><div class="pump-val">${seg(s.e100, 2, 2)}<span class="pump-u">€</span></div>${s.e100 ? `<div class="pump-note">${n(s.e100 / 100, 3)} € al km</div>` : ''}</div>
     </div></section>`;
 
   const isStandalone = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
@@ -524,15 +542,19 @@ function renderSummary() {
     h += `<div class="empty-box"><p>Nessun rifornimento nel ${y}.</p><button class="btn primary" data-act="add" style="margin-top:0">Aggiungi rifornimento</button></div>`;
   } else {
     const vn = vsNational(yr);
-    h += `<h2 class="sec">Strada e consumi</h2><div class="group">
-      <div class="row"><span class="k">Km percorsi</span><span class="v">${s.km ? kmf(s.km) : '—'}</span></div>
-      <div class="row"><span class="k">Consumo medio</span><span class="v">${s.kml ? n(s.kml, 1) + ' km/l' : '—'}${s.l100 ? `<small>${n(s.l100, 1)} l ogni 100 km</small>` : ''}</span></div>
-      <div class="row"><span class="k">Costo ogni 100 km</span><span class="v">${s.e100 ? eur(s.e100) : '—'}${s.e100 ? `<small>${n(s.e100 / 100, 3)} € al km</small>` : ''}</span></div>
-    </div>`;
-    h += `<h2 class="sec">Spesa</h2><div class="group">
+    const now = new Date(), isCur = y === now.getFullYear();
+    const dayN = Math.floor((now - new Date(y, 0, 1)) / 864e5) + 1, yearDays = (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0 ? 366 : 365;
+    const proj = isCur && dayN >= 45 ? s.spend * yearDays / dayN : null;
+    h += `<h2 class="sec">Prezzi e spesa</h2><div class="group">
+      <div class="row"><span class="k">Prezzo medio pagato</span><span class="v">${pplf(s.avgPrice)}</span></div>
+      ${vn ? `<div class="row"><span class="k">Rispetto alla media del gasolio</span><span class="v${vn.perL <= 0 ? ' good' : ''}">${vn.perL <= 0 ? '−' : '+'}${n(Math.abs(vn.perL) * 100, 1)} cent/l<small>${eur(Math.abs(vn.total))} ${vn.perL <= 0 ? 'risparmiati' : 'spesi in più'}</small></span></div>` : ''}
       <div class="row"><span class="k">Spesa media al mese</span><span class="v">${eur(s.spend / nMonths)}</span></div>
+      ${proj ? `<div class="row"><span class="k">Previsione a fine anno</span><span class="v">${n(Math.round(proj / 10) * 10, 0)} €<small>al ritmo di spesa di quest'anno</small></span></div>` : ''}
+    </div>`;
+    h += `<h2 class="sec">Strada e abitudini</h2><div class="group">
+      <div class="row"><span class="k">Km al mese</span><span class="v">${s.km ? kmf(s.km / nMonths) : '—'}</span></div>
+      <div class="row"><span class="k">Litri ogni 100 km</span><span class="v">${s.l100 ? n(s.l100, 1) + ' l' : '—'}</span></div>
       <div class="row"><span class="k">Rifornimenti</span><span class="v">${s.n}<small>in media ${n(s.liters / s.n, 1)} l ciascuno</small></span></div>
-      ${vn ? `<div class="row"><span class="k">Rispetto alla media nazionale</span><span class="v${vn.perL <= 0 ? ' good' : ''}">${vn.perL <= 0 ? '−' : '+'}${n(Math.abs(vn.perL) * 100, 1)} cent/l<small>${eur(Math.abs(vn.total))} ${vn.perL <= 0 ? 'risparmiati' : 'spesi in più'}</small></span></div>` : ''}
     </div>`;
     if (s.gapKm) h += `<p class="foot">Consumo e costo al km sono calcolati su ${kmf(s.kmC)}: ${kmf(s.gapKm)} sono esclusi perché mancano dei rifornimenti.</p>`;
     if (s.open) h += `<p class="foot">I km fatti con l'ultimo rifornimento entrano nel conto al rifornimento successivo.</p>`;
@@ -579,7 +601,7 @@ function renderSummary() {
   afterSummary(s, intW);
 }
 function afterSummary(s, intW) {
-  if (ui.animated !== ui.year) { ui.animated = ui.year; countUp($('#hero .seg'), s.spend, 2, intW); }
+  if (ui.animated !== ui.year) { ui.animated = ui.year; countUp($('#hero')); }
   const sel = vSummary.querySelector('.year[aria-selected="true"]'), bar = vSummary.querySelector('.years');
   if (sel && bar) bar.scrollLeft = sel.offsetLeft - (bar.clientWidth - sel.offsetWidth) / 2;
 }
@@ -587,7 +609,7 @@ function afterSummary(s, intW) {
 /* ---------- list view ---------- */
 function renderList() {
   const rows = derive().reverse();
-  let h = `<header class="top"><h1>Rifornimenti</h1></header>`;
+  let h = `<header class="top"><h1>Elenco</h1></header>`;
   if (!rows.length) {
     h += `<div class="empty-box"><p>Non ci sono ancora rifornimenti.</p><button class="btn primary" data-act="add" style="margin-top:0">Aggiungi rifornimento</button></div>`;
     vList.innerHTML = h; return;
@@ -611,7 +633,7 @@ function renderList() {
       <span class="ref-amt">${eur(r.cost)}</span></button>`;
   }
   flush();
-  h += `<p class="small">«media» indica un prezzo preso dalla media nazionale della settimana. I km/l di ogni riga sono i km percorsi dal rifornimento precedente divisi per i litri messi allora.</p>`;
+  h += `<p class="small">«media» indica un prezzo preso dalla media nazionale del gasolio di quella settimana. I km/l di ogni riga sono i km percorsi dal rifornimento precedente divisi per i litri messi allora.</p>`;
   vList.innerHTML = h;
 }
 
@@ -726,7 +748,7 @@ function updatePriceHint() {
   if (form.mode === 'total') { el.textContent = 'Scrivi quanto hai pagato: il prezzo al litro lo calcola l\'app.'; return; }
   if (form.est && a) {
     el.classList.add('est');
-    el.textContent = `Media nazionale della settimana del ${dLong(a.week)}. Se hai lo scontrino, scrivi il prezzo vero.`;
+    el.textContent = `Media nazionale del gasolio, settimana del ${dLong(a.week)}. Se hai lo scontrino, scrivi il prezzo vero.`;
   } else if (!form.touched) {
     const lp = lastManualPrice($('#f-date').value);
     el.innerHTML = lp ? `Scrivi il prezzo della pompa. <button type="button" id="use-last">Usa ${pplf(lp)}, l'ultimo inserito</button>` : 'Scrivi il prezzo al litro della pompa.';
@@ -844,9 +866,9 @@ async function deliver(blob, name) {
   return true;
 }
 async function doBackup() {
-  const data = {app: 'benzina', version: 1, exported: new Date().toISOString(), refuels: store.refuels.slice().sort(byDate)};
+  const data = {app: 'rifornimenti', version: 1, exported: new Date().toISOString(), refuels: store.refuels.slice().sort(byDate)};
   const blob = new Blob([JSON.stringify(data, null, 1)], {type: 'application/json'});
-  const ok = await deliver(blob, `benzina-backup-${today()}.json`);
+  const ok = await deliver(blob, `rifornimenti-backup-${today()}.json`);
   if (ok) { store.lastBackup = new Date().toISOString(); persist(false); toast('Backup salvato'); render(); if (!sheet.hidden) openData(); }
 }
 async function doCsv() {
@@ -854,14 +876,14 @@ async function doCsv() {
   const c = (x, d) => x == null ? '' : x.toFixed(d).replace('.', ',');
   let out = '﻿Data;Contachilometri (km);Litri;Prezzo al litro (€);Importo (€);Prezzo medio nazionale;Km percorsi dal precedente;Km/l;Escluso dai consumi\r\n';
   for (const r of rows) out += [r.date.split('-').reverse().join('/'), r.km, c(r.liters, 2), c(r.price, 3), c(r.cost, 2), r.est ? 'sì' : 'no', r.since == null ? '' : r.since, c(r.sinceKml, 1), r.gap ? 'sì' : 'no'].join(';') + '\r\n';
-  await deliver(new Blob([out], {type: 'text/csv'}), `benzina-rifornimenti-${today()}.csv`);
+  await deliver(new Blob([out], {type: 'text/csv'}), `rifornimenti-${today()}.csv`);
 }
 function importFile(file) {
   const fr = new FileReader();
   fr.onload = () => {
     let list;
     try { const d = JSON.parse(fr.result); list = Array.isArray(d) ? d : d.refuels; } catch (e) { list = null; }
-    if (!Array.isArray(list)) return toast('Il file non è un backup di Benzina.');
+    if (!Array.isArray(list)) return toast('Il file non è un backup di questa app.');
     let added = 0, upd = 0, dup = 0, bad = 0;
     const byKey = new Map(store.refuels.map(r => [r.date + '|' + r.km, r]));
     const ids = new Set(store.refuels.map(r => r.id));
@@ -907,9 +929,9 @@ function openData() {
   <button class="btn plain" type="button" id="d-csv">Esporta per Excel</button>
   <p class="hint">Il ripristino aggiunge i rifornimenti del file a quelli già presenti, senza duplicarli. Se un rifornimento c'è già (stessa data e stessi km), prende i valori del file.</p>
   <h2 class="sec">Prezzi medi</h2>
-  <p class="p">Quando inserisci un rifornimento passato, il prezzo viene proposto dalla media nazionale settimanale della benzina pubblicata dal Ministero, dal ${dLong(AVG_BASE)} al ${dLong(new Date(last.t).toISOString().slice(0, 10))}. Per i rifornimenti più recenti scrivi il prezzo della pompa.</p>
+  <p class="p">Quando inserisci un rifornimento passato, il prezzo viene proposto dalla media nazionale settimanale del gasolio pubblicata dal Ministero, dal ${dLong(AVG_BASE)} al ${dLong(new Date(last.t).toISOString().slice(0, 10))}. Per i rifornimenti più recenti scrivi il prezzo della pompa.</p>
   <button class="btn danger" type="button" id="d-wipe" style="margin-top:28px">Elimina tutti i rifornimenti</button>
-  <p class="small">Benzina 1.1</p>`;
+  <p class="small">Rifornimenti 1.3</p>`;
   openSheet('Backup e dati', html, 'Fine', closeSheet);
   sheet.querySelector('.sheet-head .link[data-close]').style.visibility = 'hidden';
   $('#d-backup').onclick = doBackup;
@@ -964,6 +986,7 @@ document.addEventListener('click', e => {
 
 /* ---------- start ---------- */
 load();
+migrateFuel();
 render();
 if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
 if ('serviceWorker' in navigator && location.protocol === 'https:') {

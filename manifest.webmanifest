@@ -1,6 +1,6 @@
 {
-  "name": "Benzina",
-  "short_name": "Benzina",
+  "name": "Rifornimenti",
+  "short_name": "Rifornimenti",
   "description": "Rifornimenti, spesa e consumi dell'auto",
   "lang": "it",
   "start_url": "./",
