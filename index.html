@@ -481,7 +481,7 @@ function lcdParts(v, dec, minInt) {
   for (let k = 0; k < w; k++) {
     const pos = w - 1 - k, real = k >= padN;
     val += real ? i[k - padN] : '!'; ghost += '8';
-    if (pos > 0 && pos % 3 === 0) { val += real ? 'K' : 'k'; ghost += 'K'; }
+    if (pos > 0 && pos % 3 === 0) { val += real ? 'K' : 'k'; ghost += real ? 'K' : 'k'; }
   }
   if (dec) { val += 'D' + f; ghost += 'D' + '8'.repeat(dec); }
   return {val, ghost};
