@@ -57,9 +57,12 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 .icon-btn{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--ink-2)}
 .icon-btn:active{background:var(--fill)}
 .icon-btn svg{width:24px;height:24px}
+.top-actions{display:flex;gap:2px;margin-right:-10px}
+.back{display:flex;align-items:center;gap:2px;color:var(--accent);font-size:17px;font-weight:500;min-height:44px;margin-left:-8px;padding-right:8px}
+.back svg{width:22px;height:22px}
 
 /* years */
-.years{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:10px -16px 18px;padding:2px 16px}
+.years{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:6px -16px 14px;padding:8px 16px;position:sticky;top:env(safe-area-inset-top);z-index:15;background:var(--bg);box-shadow:0 1px 0 var(--hair)}
 .years::-webkit-scrollbar{display:none}
 .year{flex:none;font:600 18px/1 'Barlow Semi Condensed',Barlow,sans-serif;padding:9px 16px;border-radius:999px;color:var(--ink-2);box-shadow:inset 0 0 0 1px var(--line)}
 .year[aria-selected="true"]{background:var(--ink);color:var(--bg);box-shadow:none}
@@ -80,7 +83,49 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 .seg{position:relative;display:inline-block;font-family:DSEG7;font-weight:700;line-height:1;white-space:pre;letter-spacing:.02em}
 .seg .g{color:var(--lcd-ghost)}
 .seg .v{position:absolute;right:0;top:0;color:var(--lcd-ink)}
-.seg.big{font-size:clamp(38px,12.8vw,58px)}
+.seg.big{font-size:clamp(36px,11.6vw,54px)}
+.seg i{display:inline-block;position:relative;width:.32em;height:1em;vertical-align:baseline;font-style:normal}
+.seg i.off{visibility:hidden}
+.seg i.sk::before{content:"";position:absolute;left:50%;top:.02em;width:.15em;height:.15em;margin-left:-.075em;background:currentColor}
+.seg i.sd::before{content:"";position:absolute;left:50%;bottom:0;width:.14em;height:.14em;margin-left:-.07em;background:currentColor}
+.seg i.sd::after{content:"";position:absolute;left:50%;bottom:-.17em;width:.065em;height:.19em;margin-left:-.005em;background:currentColor;transform:skewX(-22deg);transform-origin:top}
+.pump-avg{border-top:1px solid var(--lcd-line);padding-top:10px;font:500 16px/1.3 Barlow,sans-serif;color:var(--lcd-label)}
+.pump-avg b{font-weight:600;color:var(--lcd-ink)}
+/* key figures under the display */
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.kpi{background:var(--surface);border-radius:14px;padding:13px 14px 12px;min-width:0}
+.kpi-k{font-size:15px;color:var(--ink-2)}
+.kpi-v{font:600 30px/1.1 'Barlow Semi Condensed',Barlow,sans-serif;margin-top:4px;white-space:nowrap}
+.kpi-v span{font:500 17px Barlow,sans-serif;color:var(--ink-2);margin-left:3px}
+.kpi-s{font-size:14px;color:var(--ink-2);margin-top:3px}
+/* statistics page */
+.tot{background:var(--surface);border-radius:14px;padding:16px}
+.tot-k{font-size:15px;color:var(--ink-2)}
+.tot-v{font:600 38px/1.05 'Barlow Semi Condensed',Barlow,sans-serif;margin:4px 0 12px}
+.mini{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px;border-top:1px solid var(--hair);padding-top:12px}
+.mini dt{font-size:14px;color:var(--ink-2)}
+.mini dd{margin:1px 0 0;font-weight:600;font-size:18px}
+.mini dd .dl{display:block;font-weight:500;font-size:13px;margin-top:1px}
+.ybars{padding:6px 0}
+.ybar{display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:12px;padding:9px 16px}
+.ybar-y{font:600 18px 'Barlow Semi Condensed',Barlow,sans-serif}
+.ybar-t{height:12px;border-radius:6px;background:var(--fill);overflow:hidden}
+.ybar-b{display:block;height:100%;border-radius:6px;background:var(--bar-dim)}
+.ybar-b.part{background:repeating-linear-gradient(135deg,var(--bar-dim) 0 5px,transparent 5px 9px)}
+.ybar-a{font-weight:600;font-size:17px;text-align:right}
+.ycard{background:var(--surface);border-radius:14px;padding:14px 16px 16px;margin-top:12px}
+.ycard-h{display:flex;justify-content:space-between;align-items:baseline;width:100%;text-align:left}
+.ycard-y{font:600 24px 'Barlow Semi Condensed',Barlow,sans-serif}
+.ycard-a{font:600 26px 'Barlow Semi Condensed',Barlow,sans-serif}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:14px;font-weight:600;padding:4px 9px;border-radius:8px;margin:6px 0 12px}
+.dl.good,.chip.good{color:var(--accent)}
+.chip.good{background:var(--accent-soft)}
+.dl.bad,.chip.bad{color:var(--danger)}
+.chip.bad{background:rgba(194,54,31,.1)}
+.dl.flat,.chip.flat{color:var(--ink-2)}
+.chip.flat{background:var(--fill)}
+.ycard .mini{border-top:0;padding-top:0}
+.ycard-note{font-size:13px;color:var(--ink-3);margin-top:12px}
 
 /* banners */
 .note{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border-radius:14px;padding:13px 14px;margin:16px 0 0;font-size:15px;color:var(--ink-2)}
@@ -214,8 +259,8 @@ button.row:active{background:var(--fill)}
 .frow:focus-within{box-shadow:inset 3px 0 0 var(--accent)}
 .fsub{padding:0 16px 12px;margin-top:-4px;font-size:14px;color:var(--ink-2)}
 .chips{display:flex;gap:8px;padding:2px 16px 14px;margin-top:-4px}
-.chip{flex:1;min-height:40px;border-radius:10px;background:var(--fill);font-weight:600;font-size:17px}
-.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.qchip{flex:1;min-height:40px;border-radius:10px;background:var(--fill);font-weight:600;font-size:17px}
+.qchip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
 .segctl{display:grid;grid-template-columns:1fr 1fr;background:var(--fill);border-radius:10px;padding:3px;margin:22px 0 0}
 .segctl button{min-height:38px;border-radius:8px;font-weight:500;font-size:16px;color:var(--ink-2)}
 .segctl button[aria-checked="true"]{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.12)}
@@ -246,6 +291,7 @@ button.row:active{background:var(--fill)}
 <div class="app">
   <main id="v-summary" aria-labelledby="t-summary"></main>
   <main id="v-list" hidden></main>
+  <main id="v-stats" hidden></main>
 </div>
 
 <nav class="tabbar" aria-label="Navigazione">
@@ -417,7 +463,7 @@ function yearsOf(rows) {
 /* ---------- ui state ---------- */
 const ui = {view: 'summary', year: null, monthsOpen: false, selMonth: null, animated: null};
 const $ = s => document.querySelector(s);
-const vSummary = $('#v-summary'), vList = $('#v-list');
+const vSummary = $('#v-summary'), vList = $('#v-list'), vStats = $('#v-stats');
 
 /* 7-segment readout: ghost "8" segments behind the value, like a pump display */
 function segParts(v, dec, minInt) {
@@ -426,11 +472,25 @@ function segParts(v, dec, minInt) {
   const w = Math.max(minInt, i.length);
   return {val: '!'.repeat(w - i.length) + i + (dec ? '.' + f : ''), ghost: '8'.repeat(w) + (dec ? '.' + '8'.repeat(dec) : '')};
 }
+// K = thousands dot (raised), D = decimal comma; lowercase k = hidden spacer in front of blank digits
+function lcdParts(v, dec, minInt) {
+  const str = Math.max(0, v).toFixed(dec);
+  const [i, f] = str.split('.');
+  const w = Math.max(minInt, i.length), padN = w - i.length;
+  let val = '', ghost = '';
+  for (let k = 0; k < w; k++) {
+    const pos = w - 1 - k, real = k >= padN;
+    val += real ? i[k - padN] : '!'; ghost += '8';
+    if (pos > 0 && pos % 3 === 0) { val += real ? 'K' : 'k'; ghost += 'K'; }
+  }
+  if (dec) { val += 'D' + f; ghost += 'D' + '8'.repeat(dec); }
+  return {val, ghost};
+}
+const lcdHTML = str => str.replace(/[KkD]/g, c => c === 'D' ? '<i class="sd"></i>' : `<i class="sk${c === 'k' ? ' off' : ''}"></i>`);
 function seg(v, dec, minInt, cls) {
-  const p = segParts(v || 0, dec, minInt);
-  if (v == null) p.val = p.ghost.replace(/8/g, '-');
+  const p = lcdParts(v || 0, dec, minInt);
   const data = v > 0 ? ` data-to="${v}" data-dec="${dec}" data-min="${minInt}"` : '';
-  return `<span class="seg ${cls || ''}" aria-hidden="true"${data}><span class="g">${p.ghost}</span><span class="v">${p.val}</span></span>`;
+  return `<span class="seg ${cls || ''}" aria-hidden="true"${data}><span class="g">${lcdHTML(p.ghost)}</span><span class="v">${lcdHTML(p.val)}</span></span>`;
 }
 // every number on the display counts up together, like a pump starting
 function countUp(root) {
@@ -440,7 +500,7 @@ function countUp(root) {
   const t0 = performance.now(), dur = 900;
   const step = t => {
     const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
-    for (const it of items) it.v.textContent = segParts(it.to * e, it.dec, it.min).val;
+    for (const it of items) it.v.innerHTML = lcdHTML(lcdParts(it.to * e, it.dec, it.min).val);
     if (k < 1) requestAnimationFrame(step);
   };
   requestAnimationFrame(step);
@@ -495,30 +555,35 @@ function barChart(vals, from, to, sel) {
   }
   return s + '</svg>';
 }
+const ICON_STATS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M5 20v-5M12 20V10M19 20V4"/></svg>';
+const ICON_BACKUP = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7.5h16v11a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5z"/><path d="M3 4.5h18v3H3z"/><path d="M12 10.5v6M9.5 14l2.5 2.5 2.5-2.5"/></svg>';
+function yearStats(rows, y) {
+  const yr = rows.filter(r => r.date.startsWith(y + '-'));
+  const a = agg(yr), span = monthsSpan(y, rows);
+  a.months = Math.max(1, span.to - span.from + 1);
+  a.perMonth = a.spend / a.months;
+  a.kmMonth = a.km / a.months;
+  return a;
+}
 function renderSummary() {
   const rows = derive();
   const years = yearsOf(rows);
   if (ui.year == null || !years.includes(ui.year)) ui.year = defaultYear(rows);
   const y = ui.year, yr = rows.filter(r => r.date.startsWith(y + '-'));
-  const s = agg(yr);
+  const s = yearStats(rows, y);
   const span = monthsSpan(y, rows);
-  const nMonths = Math.max(1, span.to - span.from + 1);
   const intW = Math.max(4, Math.floor(s.spend).toString().length);
-  let h = `<header class="top"><h1>Rifornimenti</h1>
-    <button class="icon-btn" id="b-data" aria-label="Backup e dati"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7.5h16v11a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5z"/><path d="M3 4.5h18v3H3z"/><path d="M12 10.5v6M9.5 14l2.5 2.5 2.5-2.5"/></svg></button></header>`;
+  let h = `<header class="top"><h1>Rifornimenti</h1><div class="top-actions">
+    <button class="icon-btn" data-nav="stats" aria-label="Statistiche e confronto tra gli anni">${ICON_STATS}</button>
+    <button class="icon-btn" id="b-data" aria-label="Backup e dati">${ICON_BACKUP}</button></div></header>`;
   h += `<div class="years" role="tablist" aria-label="Anno">` + years.map(v =>
     `<button class="year" role="tab" data-year="${v}" aria-selected="${v === y}">${v}</button>`).join('') + `</div>`;
 
-  const kmW = Math.max(4, String(Math.round(s.km)).length);
-  h += `<section class="pump" id="hero" aria-label="Nel ${y}: speso ${eur(s.spend)}, ${ltf(s.liters)}, ${s.km ? kmf(s.km) : 'km non ancora calcolabili'}, consumo ${s.kml ? n(s.kml, 1) + ' km/l' : 'non disponibile'}, ${s.e100 ? eur(s.e100) + ' ogni 100 km' : ''}">
+  h += `<section class="pump" id="hero" aria-label="Speso nel ${y}: ${eur(s.spend)}, in media ${eur(s.perMonth)} al mese">
     <div class="pump-label">Speso nel ${y}</div>
     <div class="pump-big">${seg(s.spend, 2, intW, 'big')}<span class="pump-unit">€</span></div>
-    <div class="pump-grid">
-      <div class="pump-cell"><div class="pump-label">Litri</div><div class="pump-val">${seg(s.liters, 1, 3)}<span class="pump-u">l</span></div></div>
-      <div class="pump-cell"><div class="pump-label">Km percorsi</div><div class="pump-val">${seg(s.km || null, 0, kmW)}<span class="pump-u">km</span></div></div>
-      <div class="pump-cell"><div class="pump-label">Consumo medio</div><div class="pump-val">${seg(s.kml, 1, 2)}<span class="pump-u">km/l</span></div></div>
-      <div class="pump-cell"><div class="pump-label">Ogni 100 km</div><div class="pump-val">${seg(s.e100, 2, 2)}<span class="pump-u">€</span></div>${s.e100 ? `<div class="pump-note">${n(s.e100 / 100, 3)} € al km</div>` : ''}</div>
-    </div></section>`;
+    <div class="pump-avg">${yr.length ? `In media <b>${eur(s.perMonth)}</b> al mese` : 'Nessun rifornimento'}</div>
+  </section>`;
 
   const isStandalone = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
   if (/iPhone|iPad|iPod/.test(navigator.userAgent) && !isStandalone) {
@@ -529,7 +594,7 @@ function renderSummary() {
     h += `<div class="empty-box"><p>Registra il primo rifornimento: data, km del contachilometri, litri e prezzo. Al resto pensa l'app.</p>
       <button class="btn primary" data-act="add" style="margin-top:0">Aggiungi rifornimento</button>
       <button class="btn plain" data-act="import">Ripristina un backup</button></div>`;
-    vSummary.innerHTML = h; afterSummary(s, intW); return;
+    vSummary.innerHTML = h; afterSummary(); return;
   }
 
   const days = store.lastBackup ? Math.floor((Date.now() - Date.parse(store.lastBackup)) / 864e5) : null;
@@ -541,19 +606,23 @@ function renderSummary() {
   if (!yr.length) {
     h += `<div class="empty-box"><p>Nessun rifornimento nel ${y}.</p><button class="btn primary" data-act="add" style="margin-top:0">Aggiungi rifornimento</button></div>`;
   } else {
+    // second level: the two figures that matter most after the money
+    h += `<div class="kpis">
+      <div class="kpi"><div class="kpi-k">Km percorsi</div><div class="kpi-v">${s.km ? n(s.km, 0) : '—'}<span>km</span></div><div class="kpi-s">${s.km ? n(s.kmMonth, 0) + ' km al mese' : 'dopo il prossimo rifornimento'}</div></div>
+      <div class="kpi"><div class="kpi-k">Consumo medio</div><div class="kpi-v">${s.kml ? n(s.kml, 1) : '—'}<span>km/l</span></div><div class="kpi-s">${s.l100 ? n(s.l100, 1) + ' l ogni 100 km' : '&nbsp;'}</div></div>
+    </div>`;
+    // third level: details, grouped
     const vn = vsNational(yr);
     const now = new Date(), isCur = y === now.getFullYear();
     const dayN = Math.floor((now - new Date(y, 0, 1)) / 864e5) + 1, yearDays = (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0 ? 366 : 365;
     const proj = isCur && dayN >= 45 ? s.spend * yearDays / dayN : null;
-    h += `<h2 class="sec">Prezzi e spesa</h2><div class="group">
-      <div class="row"><span class="k">Prezzo medio pagato</span><span class="v">${pplf(s.avgPrice)}</span></div>
-      ${vn ? `<div class="row"><span class="k">Rispetto alla media del gasolio</span><span class="v${vn.perL <= 0 ? ' good' : ''}">${vn.perL <= 0 ? '−' : '+'}${n(Math.abs(vn.perL) * 100, 1)} cent/l<small>${eur(Math.abs(vn.total))} ${vn.perL <= 0 ? 'risparmiati' : 'spesi in più'}</small></span></div>` : ''}
-      <div class="row"><span class="k">Spesa media al mese</span><span class="v">${eur(s.spend / nMonths)}</span></div>
+    h += `<h2 class="sec">Costi</h2><div class="group">
+      <div class="row"><span class="k">Costo ogni 100 km</span><span class="v">${s.e100 ? eur(s.e100) : '—'}${s.e100 ? `<small>${n(s.e100 / 100, 3)} € al km</small>` : ''}</span></div>
+      <div class="row"><span class="k">Prezzo medio pagato</span><span class="v${vn && vn.perL <= 0 ? ' good' : ''}">${pplf(s.avgPrice)}${vn ? `<small>${n(Math.abs(vn.perL) * 100, 1)} cent/l ${vn.perL <= 0 ? 'sotto' : 'sopra'} la media del gasolio</small>` : ''}</span></div>
       ${proj ? `<div class="row"><span class="k">Previsione a fine anno</span><span class="v">${n(Math.round(proj / 10) * 10, 0)} €<small>al ritmo di spesa di quest'anno</small></span></div>` : ''}
     </div>`;
-    h += `<h2 class="sec">Strada e abitudini</h2><div class="group">
-      <div class="row"><span class="k">Km al mese</span><span class="v">${s.km ? kmf(s.km / nMonths) : '—'}</span></div>
-      <div class="row"><span class="k">Litri ogni 100 km</span><span class="v">${s.l100 ? n(s.l100, 1) + ' l' : '—'}</span></div>
+    h += `<h2 class="sec">Rifornimenti</h2><div class="group">
+      <div class="row"><span class="k">Litri messi</span><span class="v">${n(s.liters, 1)} l</span></div>
       <div class="row"><span class="k">Rifornimenti</span><span class="v">${s.n}<small>in media ${n(s.liters / s.n, 1)} l ciascuno</small></span></div>
     </div>`;
     if (s.gapKm) h += `<p class="foot">Consumo e costo al km sono calcolati su ${kmf(s.kmC)}: ${kmf(s.gapKm)} sono esclusi perché mancano dei rifornimenti.</p>`;
@@ -584,26 +653,72 @@ function renderSummary() {
     }
     h += `</div>`;
   }
-
-  // years compared
-  const ys = years.map(v => ({y: v, a: agg(rows.filter(r => r.date.startsWith(v + '-')))})).filter(o => o.a.n);
-  if (ys.length > 1) {
-    const mx = Math.max(...ys.map(o => o.a.spend));
-    h += `<h2 class="sec">Anni a confronto</h2><div class="group">` + ys.slice().reverse().map(o =>
-      `<button class="yrow${o.y === y ? ' cur' : ''}" data-year="${o.y}">
-        <span class="yrow-y">${o.y}</span>
-        <span class="yrow-track"><span class="yrow-bar" style="display:block;width:${Math.max(2, 100 * o.a.spend / mx)}%"></span></span>
-        <span class="yrow-amt">${eur(o.a.spend)}</span>
-        <span class="yrow-meta"><span>${pplf(o.a.avgPrice)}</span><span>${o.a.km ? kmf(o.a.km) : '— km'}</span><span>${o.a.kml ? n(o.a.kml, 1) + ' km/l' : ''}</span></span>
-      </button>`).join('') + `</div>`;
-  }
   vSummary.innerHTML = h;
-  afterSummary(s, intW);
+  afterSummary();
 }
-function afterSummary(s, intW) {
+function afterSummary() {
   if (ui.animated !== ui.year) { ui.animated = ui.year; countUp($('#hero')); }
   const sel = vSummary.querySelector('.year[aria-selected="true"]'), bar = vSummary.querySelector('.years');
   if (sel && bar) bar.scrollLeft = sel.offsetLeft - (bar.clientWidth - sel.offsetWidth) / 2;
+}
+
+/* ---------- statistics: years compared ---------- */
+// direction: 1 = higher is better, -1 = lower is better, 0 = neutral
+function delta(cur, prev, dir, pct = true) {
+  if (cur == null || prev == null || !prev) return null;
+  const d = pct ? (cur - prev) / prev * 100 : cur - prev;
+  const round = Math.abs(d) < (pct ? 0.5 : 0.05);
+  const cls = round || !dir ? 'flat' : (d > 0) === (dir > 0) ? 'good' : 'bad';
+  const arrow = round ? '=' : d > 0 ? '▲' : '▼';
+  const txt = round ? 'invariato' : (d > 0 ? '+' : '−') + n(Math.abs(d), pct ? 0 : 1) + (pct ? '%' : '');
+  return {cls, arrow, txt, up: d > 0, round};
+}
+const dl = (d, unit) => d ? `<span class="dl ${d.cls}">${d.arrow} ${d.txt}${unit || ''}</span>` : '';
+function renderStats() {
+  const rows = derive();
+  let h = `<header class="top"><button class="back" data-nav="summary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Riepilogo</button></header>
+    <h1 class="stats-title" style="margin:2px 0 14px;font:600 30px/1.1 'Barlow Semi Condensed',Barlow,sans-serif">Statistiche</h1>`;
+  if (!rows.length) { vStats.innerHTML = h + `<div class="empty-box"><p>Le statistiche compaiono dopo il primo rifornimento.</p></div>`; return; }
+  const years = yearsOf(rows).filter(y => rows.some(r => r.date.startsWith(y + '-')));
+  const now = new Date(), cy = now.getFullYear(), md = isoOfDate(now).slice(5);
+  const all = agg(rows);
+  h += `<section class="tot"><div class="tot-k">Speso in tutto dal ${years[0]}</div><div class="tot-v">${eur(all.spend)}</div>
+    <dl class="mini">
+      <div><dt>Km percorsi</dt><dd>${kmf(all.km)}</dd></div>
+      <div><dt>Consumo medio</dt><dd>${all.kml ? n(all.kml, 1) + ' km/l' : '—'}</dd></div>
+      <div><dt>Ogni 100 km</dt><dd>${all.e100 ? eur(all.e100) : '—'}</dd></div>
+      <div><dt>Litri messi</dt><dd>${n(all.liters, 0)} l</dd></div>
+    </dl></section>`;
+  const st = years.map(y => ({y, a: yearStats(rows, y)}));
+  const mx = Math.max(...st.map(o => o.a.spend));
+  h += `<h2 class="sec">Spesa per anno</h2><div class="group ybars">` + st.slice().reverse().map(o =>
+    `<div class="ybar"><span class="ybar-y">${o.y}</span><span class="ybar-t"><span class="ybar-b${o.y === cy ? ' part' : ''}" style="width:${Math.max(2, 100 * o.a.spend / mx)}%"></span></span><span class="ybar-a">${eur(o.a.spend)}</span></div>`).join('') + `</div>`;
+  if (years.includes(cy)) h += `<p class="foot">Il ${cy} è ancora in corso: la barra a righe è la spesa fino a oggi.</p>`;
+  h += `<h2 class="sec">Anno per anno</h2>`;
+  for (let i = st.length - 1; i >= 0; i--) {
+    const {y, a} = st[i];
+    let p = null, label = '';
+    if (i > 0) {
+      const py = st[i - 1].y;
+      if (y === cy) { // same period of the previous year, so a year in progress is compared fairly
+        const pr = rows.filter(r => r.date.startsWith(py + '-') && r.date.slice(5) <= md);
+        p = agg(pr); p.perMonth = p.spend / Math.max(1, now.getMonth() + 1); label = `rispetto allo stesso periodo del ${py}`;
+      } else { p = st[i - 1].a; label = `rispetto al ${py}`; }
+    }
+    const dS = p ? delta(a.spend, p.spend, -1) : null;
+    h += `<article class="ycard"><button class="ycard-h" data-year="${y}" data-open="1" aria-label="Apri il riepilogo del ${y}"><span class="ycard-y">${y}${y === cy ? ' <small style="font:500 14px Barlow;color:var(--ink-3)">fino a oggi</small>' : ''}</span><span class="ycard-a">${eur(a.spend)}</span></button>
+      ${dS ? `<div class="chip ${dS.cls}">${dS.arrow} ${dS.round ? 'Spesa invariata' : `${dS.txt} di spesa`} <span style="font-weight:500">${label}</span></div>` : `<div class="chip flat">Primo anno registrato</div>`}
+      <dl class="mini">
+        <div><dt>Km percorsi</dt><dd>${a.km ? kmf(a.km) : '—'}${p ? dl(delta(a.km, p.km, 0)) : ''}</dd></div>
+        <div><dt>Consumo medio</dt><dd>${a.kml ? n(a.kml, 1) + ' km/l' : '—'}${p ? dl(delta(a.kml, p.kml, 1, false), ' km/l') : ''}</dd></div>
+        <div><dt>Ogni 100 km</dt><dd>${a.e100 ? eur(a.e100) : '—'}${p ? dl(delta(a.e100, p.e100, -1)) : ''}</dd></div>
+        <div><dt>Prezzo medio</dt><dd>${pplf(a.avgPrice)}${p ? dl(delta(a.avgPrice, p.avgPrice, -1)) : ''}</dd></div>
+        <div><dt>Spesa al mese</dt><dd>${eur(a.perMonth)}${p && y !== cy ? dl(delta(a.perMonth, p.perMonth, -1)) : ''}</dd></div>
+        <div><dt>Litri messi</dt><dd>${n(a.liters, 0)} l${p ? dl(delta(a.liters, p.liters, 0)) : ''}</dd></div>
+      </dl></article>`;
+  }
+  h += `<p class="foot">Verde: è andata meglio dell'anno prima (meno spesa, meno consumi). Rosso: è andata peggio. Grigio: solo una differenza, né meglio né peggio. Tocca un anno per aprirne il riepilogo.</p>`;
+  vStats.innerHTML = h;
 }
 
 /* ---------- list view ---------- */
@@ -640,10 +755,11 @@ function renderList() {
 function render() {
   vSummary.hidden = ui.view !== 'summary';
   vList.hidden = ui.view !== 'list';
+  vStats.hidden = ui.view !== 'stats';
   document.querySelectorAll('.tab').forEach(t => t.toggleAttribute('aria-current', false));
   const tab = document.querySelector(`.tab[data-nav="${ui.view}"]`);
   if (tab) tab.setAttribute('aria-current', 'page');
-  if (ui.view === 'summary') renderSummary(); else renderList();
+  if (ui.view === 'summary') renderSummary(); else if (ui.view === 'stats') renderStats(); else renderList();
 }
 
 /* ---------- sheet ---------- */
@@ -692,7 +808,7 @@ function openForm(id) {
     <div class="frow"><label for="f-km">Contachilometri</label><div class="inp"><input id="f-km" inputmode="numeric" autocomplete="off" placeholder="es. 45210" enterkeyhint="next"><span class="u">km</span></div></div>
     <div class="fsub" id="h-km"></div>
     <div class="frow"><label for="f-l">Litri</label><div class="inp"><input id="f-l" inputmode="decimal" autocomplete="off" placeholder="es. 40" enterkeyhint="next"><span class="u">l</span></div></div>
-    <div class="chips" role="group" aria-label="Litri rapidi">${QUICK.map(q => `<button type="button" class="chip" data-q="${q}" aria-pressed="false">${q}</button>`).join('')}</div>
+    <div class="chips" role="group" aria-label="Litri rapidi">${QUICK.map(q => `<button type="button" class="qchip" data-q="${q}" aria-pressed="false">${q}</button>`).join('')}</div>
   </div>
   <div class="segctl" role="radiogroup" aria-label="Cosa inserisci">
     <button type="button" role="radio" data-mode="price" aria-checked="true">Prezzo al litro</button>
@@ -776,7 +892,7 @@ function updateForm() {
   $('#pf-tot').innerHTML = seg(tot, 2, 3);
   $('#pf-l').innerHTML = seg(okL ? L : 0, 2, 2);
   $('#pf-p').innerHTML = seg(okP ? P : 0, 3, 1);
-  document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', String(okL && +c.dataset.q === L)));
+  document.querySelectorAll('.qchip').forEach(c => c.setAttribute('aria-pressed', String(okL && +c.dataset.q === L)));
   // odometer hint
   const date = $('#f-date').value, km = parseInt($('#f-km').value.replace(/\D/g, ''), 10);
   const {prev} = neighbours(date || today());
@@ -796,7 +912,7 @@ function wireForm() {
   $('#f-l').addEventListener('input', updateForm);
   $('#f-p').addEventListener('input', () => { form.touched = true; form.est = false; updateForm(); updatePriceHint(); });
   $('#f-t').addEventListener('input', () => { form.touched = true; form.est = false; updateForm(); });
-  document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => { $('#f-l').value = c.dataset.q; updateForm(); }));
+  document.querySelectorAll('.qchip').forEach(c => c.addEventListener('click', () => { $('#f-l').value = c.dataset.q; updateForm(); }));
   document.querySelectorAll('.segctl button').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
   $('#f-save').addEventListener('click', saveForm);
   const del = $('#f-del'); if (del) del.addEventListener('click', deleteCurrent);
@@ -931,7 +1047,7 @@ function openData() {
   <h2 class="sec">Prezzi medi</h2>
   <p class="p">Quando inserisci un rifornimento passato, il prezzo viene proposto dalla media nazionale settimanale del gasolio pubblicata dal Ministero, dal ${dLong(AVG_BASE)} al ${dLong(new Date(last.t).toISOString().slice(0, 10))}. Per i rifornimenti più recenti scrivi il prezzo della pompa.</p>
   <button class="btn danger" type="button" id="d-wipe" style="margin-top:28px">Elimina tutti i rifornimenti</button>
-  <p class="small">Rifornimenti 1.3</p>`;
+  <p class="small">Rifornimenti 1.4</p>`;
   openSheet('Backup e dati', html, 'Fine', closeSheet);
   sheet.querySelector('.sheet-head .link[data-close]').style.visibility = 'hidden';
   $('#d-backup').onclick = doBackup;
@@ -964,8 +1080,13 @@ document.addEventListener('click', e => {
   if (el.id === 'b-add') return openForm(null);
   if (el.id === 'b-data') return openData();
   if (el.dataset.nav) { ui.view = el.dataset.nav; render(); window.scrollTo(0, 0); return; }
-  if (el.dataset.year) { ui.year = +el.dataset.year; ui.selMonth = null; render(); if (el.classList.contains('yrow')) window.scrollTo({top: 0, behavior: 'smooth'}); return; }
-  if (el.dataset.month != null && el.dataset.month !== '') { ui.selMonth = +el.dataset.month; render(); return; }
+  if (el.dataset.year) {
+    ui.year = +el.dataset.year;
+    if (el.dataset.open) { ui.view = 'summary'; render(); window.scrollTo(0, 0); return; }
+    const y = window.scrollY; render(); window.scrollTo(0, y); // stay where you are: compare years in place
+    return;
+  }
+  if (el.dataset.month != null && el.dataset.month !== '') { const y = window.scrollY; ui.selMonth = +el.dataset.month; render(); window.scrollTo(0, y); return; }
   if (el.dataset.mrow != null) {
     const m = +el.dataset.mrow;
     if (ui.selMonth === m) { // second tap: open that month in the list
@@ -974,14 +1095,14 @@ document.addEventListener('click', e => {
       if (target) target.scrollIntoView({block: 'start'});
       return;
     }
-    ui.selMonth = m; render(); return;
+    const y = window.scrollY; ui.selMonth = m; render(); window.scrollTo(0, y); return;
   }
   if (el.dataset.id) return openForm(el.dataset.id);
   const act = el.dataset.act;
   if (act === 'add') openForm(null);
   else if (act === 'import') $('#file-in').click();
   else if (act === 'backup') doBackup();
-  else if (act === 'months') { ui.monthsOpen = !ui.monthsOpen; render(); }
+  else if (act === 'months') { const y = window.scrollY; ui.monthsOpen = !ui.monthsOpen; render(); window.scrollTo(0, y); }
 });
 
 /* ---------- start ---------- */
